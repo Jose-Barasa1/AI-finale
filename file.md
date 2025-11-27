@@ -420,34 +420,49 @@ Goodbye!
 
 **Prompt Used:**
 ```
-[Space for you to write the exact prompt you used with the AI assistant]
+[I need to create a beginner's toolkit document for the Rust programming language as part of my AI capstone project. Please generate a complete toolkit following this structure:
+1. Title & Objective - explaining what Rust is, why I chose it, and the end goal (a simple CLI application)
+2. Quick Summary - what Rust is, where it's used, and one real-world example
+3. System Requirements - OS, tools/editors needed, and packages required
+4. Installation & Setup Instructions - step-by-step guide with terminal commands for Linux/macOS/Windows
+5. Minimal Working Example - a complete, runnable "Hello World" or simple CLI application with:
+   - Full commented code
+   - Explanation of what it does
+   - Expected output
+6. AI Prompt Journal - Leave this section as a template for me to fill in later with:
+   - Prompt used
+   - Link to curriculum
+   - AI response summary
+   - Evaluation of helpfulness
+7. Common Issues & Fixes - at least 3-5 common errors beginners face with Rust and solutions
+8. References - official docs, tutorials, and helpful resources
+Please make it beginner-friendly, include actual code examples that can be copy-pasted and run, and format it in Markdown. The minimal working example should be more than just "Hello World" - make it a simple but practical application like a task manager CLI, calculator, or file reader.]
 ```
 
 **Link to Curriculum:**
 ```
-[Space for relevant course materials, assignment guidelines, or learning objectives]
+[https://training.moringaschool.com/courses/2]
 ```
 
 **AI Response Summary:**
 ```
-[Space to summarize what the AI provided - was it code, explanation, debugging help?]
+[Highlights:
+
+Complete Structure - All 8 sections you requested with detailed information
+Practical Example - A fully functional Task Manager CLI application (not just "Hello World") that demonstrates:
+
+Structs and methods
+File I/O for data persistence
+User input handling
+Error handling with Result types
+Rust's ownership system in action
+
+
+Ready-to-Run Code - The task manager can be copied and run immediately with cargo run
+Real Solutions - 7 common beginner issues with actual error messages and fixes
+AI Prompt Journal Template - Pre-formatted section for you to document your AI interactions]
 ```
 
-**Evaluation of Helpfulness:**
-```
-Rate: [1-5 stars]
-
-What worked well:
-- [Point 1]
-- [Point 2]
-
-What could be improved:
-- [Point 1]
-- [Point 2]
-
-How I modified the AI's response:
-- [Your changes and why you made them]
-```
 
 ---
 
@@ -642,3 +657,5 @@ cargo update
 **Document Version**: 1.0  
 **Last Updated**: November 2025  
 **Created for**: AI Capstone Project
+**Name** : Jose' Barasa
+**Github Link**: [https://github.com/Jose-Barasa1/AI-finale.git]
