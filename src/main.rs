@@ -1,13 +1,14 @@
 use std::io::{self, Write};
+use colored::Colorize; // Import the Colorize trait
+use prettytable::{Table, row}; // Removed unused `cell`
 
-// Define a Task struct to hold task information
+// Define a Task struct
 struct Task {
     id: usize,
     description: String,
     completed: bool,
 }
 
-// Implement methods for Task
 impl Task {
     fn new(id: usize, description: String) -> Task {
         Task {
@@ -17,49 +18,72 @@ impl Task {
         }
     }
 
-    fn display(&self) {
-        let status = if self.completed { "✓" } else { " " };
-        println!("[{}] {}. {}", status, self.id, self.description);
+    fn status(&self) -> String {
+        if self.completed {
+            "✓".green().to_string()
+        } else {
+            " ".yellow().to_string()
+        }
     }
 }
 
-// Main function
 fn main() {
     let mut tasks: Vec<Task> = Vec::new();
     let mut next_id = 1;
 
-    println!("🦀 Welcome to Rust Task Manager!");
-    println!("Commands: add, list, complete, quit\n");
+    println!("{}", "🦀 Welcome to Rust Task Manager!".bright_purple().bold());
+    println!("{}", "Use the menu to manage tasks.\n".bright_blue());
 
     loop {
-        print!("> ");
-        io::stdout().flush().unwrap(); // Ensure prompt displays immediately
+        println!("{}", "📌 Menu:".bright_blue().bold());
+        println!("1️⃣  Add task");
+        println!("2️⃣  List tasks");
+        println!("3️⃣  Complete task");
+        println!("4️⃣  Quit");
+        print!("{}", "> ".bright_green());
+        io::stdout().flush().unwrap();
 
-        let mut input = String::new();
-        io::stdin().read_line(&mut input).unwrap();
-        let input = input.trim();
+        let mut choice = String::new();
+        io::stdin().read_line(&mut choice).unwrap();
+        let choice = choice.trim();
 
-        // Parse command using pattern matching
-        match input {
-            cmd if cmd.starts_with("add ") => {
-                let description = cmd[4..].to_string();
-                tasks.push(Task::new(next_id, description));
-                println!("✅ Task {} added!", next_id);
-                next_id += 1;
-            }
-            "list" => {
-                if tasks.is_empty() {
-                    println!("📝 No tasks yet. Add one with 'add <task>'");
+        match choice {
+            "1" => {
+                print!("{}", "Enter task description: ".bright_yellow());
+                io::stdout().flush().unwrap();
+
+                let mut desc = String::new();
+                io::stdin().read_line(&mut desc).unwrap();
+                let desc = desc.trim();
+
+                if desc.is_empty() {
+                    println!("{}", "❌ Task description cannot be empty".red());
                 } else {
-                    println!("\n📋 Your Tasks:");
-                    for task in &tasks {
-                        task.display();
-                    }
-                    println!();
+                    tasks.push(Task::new(next_id, desc.to_string()));
+                    println!("✅ Task {} added!", next_id);
+                    next_id += 1;
                 }
             }
-            cmd if cmd.starts_with("complete ") => {
-                if let Ok(id) = cmd[9..].parse::<usize>() {
+            "2" => {
+                if tasks.is_empty() {
+                    println!("{}", "📝 No tasks yet. Add one first.".yellow());
+                } else {
+                    let mut table = Table::new();
+                    table.add_row(row!["ID", "Description", "Status"]);
+                    for task in &tasks {
+                        table.add_row(row![task.id, task.description, task.status()]);
+                    }
+                    table.printstd();
+                }
+            }
+            "3" => {
+                print!("{}", "Enter task ID to complete: ".bright_yellow());
+                io::stdout().flush().unwrap();
+
+                let mut id_input = String::new();
+                io::stdin().read_line(&mut id_input).unwrap();
+
+                if let Ok(id) = id_input.trim().parse::<usize>() {
                     if let Some(task) = tasks.iter_mut().find(|t| t.id == id) {
                         task.completed = true;
                         println!("🎉 Task {} completed!", id);
@@ -70,13 +94,14 @@ fn main() {
                     println!("❌ Invalid task ID");
                 }
             }
-            "quit" => {
-                println!("👋 Goodbye!");
+            "4" => {
+                println!("{}", "👋 Goodbye!".bright_magenta());
                 break;
             }
             _ => {
-                println!("❓ Unknown command. Try: add, list, complete, quit");
+                println!("{}", "❓ Invalid choice, please try again.".red());
             }
         }
+        println!(); // spacing
     }
 }
